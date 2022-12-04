@@ -28,3 +28,9 @@
 td{
     border: 1px solid orange;
 }
+
+.search-bar{
+    height:30px;
+    width:90%;
+    background-color: transparent;
+}

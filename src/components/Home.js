@@ -8,13 +8,21 @@ export default function Home(){
     const [isLoading,setIsLoading]= useState(true)
     const [editThisUser, setEditThisUser] = useState({})
     const [isEditing,setIsEditing] = useState(false)
+    const [query , setQuery] = useState('')
     useEffect(()=>{
         fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json')
         .then(res=> res.json())
-        .then(data=> setUsers(data))
+        .then(data=> setUsers(data)) 
         setIsLoading(false)
         
     },[]) 
+
+    const SearchBar = ()=>{
+        
+        return(
+                <input className="search-bar" type="text" placeholder="Search User By name, role or email" value={query} onChange={(e)=> setQuery(e.target.value)}/>
+        )
+    }
     
     const handleForm = (e)=>{
         
@@ -27,9 +35,9 @@ export default function Home(){
 
     }
  console.log(users)
- const handleSubmitEdit = ()=>{
-    const nweArr = users.map(user => (user.id === editThisUser.id) ? {...editThisUser} : user)
-    setUsers([...nweArr])
+ const handleSubmitEdit = ()=>{ 
+    const newArr = users.map(user => (user.id === editThisUser.id) ? {...editThisUser} : user)
+    setUsers([...newArr])
     setIsEditing(false)
  
 }
@@ -60,7 +68,7 @@ export default function Home(){
     setUsers(updatedUsers) 
  }
 
-    const allUsers = users.map(user => {
+    const allUsers = users.filter((item) => item.name.toLowerCase().includes(query) || item.role.toLowerCase().includes(query) || item.email.toLowerCase().includes(query)).map(user => {
         return(
             
             (isEditing && user.id ===editThisUser.id) ?  
@@ -84,7 +92,7 @@ export default function Home(){
     })
     return(
         <div className="home">
-            home
+            <SearchBar/>
             <table className="users-table">
                 <thead>
                     <tr>
