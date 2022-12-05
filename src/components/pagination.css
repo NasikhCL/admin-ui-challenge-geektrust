@@ -1,6 +1,27 @@
+.pagination{
+    margin: auto;
+    width: auto;
+    color: #13253a;
+}
+
+.pagination button{
+    border-color:#13253a;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 50%;
+    background-color: transparent;
+}
+.pagination button:hover{
+    background-color: #13253a;
+    color: #e5ecf9;
+}
+
 .pagination button.active{
      font-weight:900;
-     border-color:black;
-     background-color:yellow;
-     color:black;
+     border:none;
+     background-color:#13253a;
+     color: #e5ecf9;
+}
+.pagination button:disabled{
+    cursor: not-allowed;
 }

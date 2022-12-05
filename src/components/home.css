@@ -1,11 +1,15 @@
 .home{
-    height: 60vh;
-    overflow-y: scroll;
+    height: 80vh;
+ 
 }
 .users-table{
-    margin: auto;
+    margin:10px auto;
     width:90%;
+    /* height: 70vh; */
     text-align: left;
+}
+.users-data{
+    height:40px;
 }
 .display-flex{
     margin: auto;
@@ -31,7 +35,8 @@ td{
 
 .search-bar{
     height:30px;
-    width:90%;
+    width:80%;
     background-color: transparent;
+    margin-bottom: 20px;
 }
 

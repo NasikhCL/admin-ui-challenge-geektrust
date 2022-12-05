@@ -83,7 +83,7 @@ export default function Home(){
             (isEditing && user.id ===editThisUser.id) ?  
           <ToEditUser /> : 
         
-                <tbody key={user.id}>
+                <tbody className="users-data" key={user.id}>
  
 
                    <td>{user.name}</td>
@@ -113,8 +113,8 @@ export default function Home(){
                 </thead>
                 { isLoading ? <h1>Loading ... </h1> : allUsers }
             </table>
-            <Pagination totalUsers={users.length} usersPerPage={usersPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
           
+            <Pagination totalUsers={users.length} usersPerPage={usersPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
         </div>
 
 
