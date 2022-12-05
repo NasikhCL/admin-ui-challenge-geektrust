@@ -1,8 +1,8 @@
 import React,{useState, useEffect} from "react";
 import './home.css'
 import Pagination from "./Pagination";
-
-
+import SearchBar from "./SearchBar";
+import EditUser from "./EditUser";
 
 export default function Home(){
     const [users, setUsers]= useState([]);
@@ -12,6 +12,7 @@ export default function Home(){
     const [query , setQuery] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
     const [usersPerPage, setUsersPerPage] = useState(10);
+    console.log('render');
     
     useEffect(()=>{
         fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json')
@@ -26,15 +27,10 @@ export default function Home(){
 
     
     const currentPageUsers = users.slice(firstUserIndex, lastUserIndex)
-    const SearchBar = ()=>{
-        
-        return(
-                <input className="search-bar" type="text" placeholder="Search User By name, role or email" value={query} onChange={(e)=> setQuery(e.target.value)}/>
-        )
-    }
+
     
     const handleForm = (e)=>{
-        
+        // console.log('render');
         setEditThisUser(prevData => {
             return({
                 ...prevData,
@@ -45,24 +41,15 @@ export default function Home(){
     }
  console.log(users)
  const handleSubmitEdit = ()=>{ 
+    console.log('render');
     const newArr = users.map(user => (user.id === editThisUser.id) ? {...editThisUser} : user)
     setUsers([...newArr])
     setIsEditing(false)
  
 }
- const ToEditUser = (user)=> {
-    return(
-        <div  key={user.id}>
-            <input  name="name" type="text" onChange={(e)=>handleForm(e)} value={editThisUser.name} />
-            <input name="email" type="email" onChange={handleForm} value={editThisUser.email} />
-            <input name="role" type="text" onChange={handleForm} value={editThisUser.role} />
-            <span onClick={handleSubmitEdit}><img src="https://img.icons8.com/fluency/18/null/checkmark.png"/></span>
-            <span onClick={()=> setIsEditing(false)}><img src="https://img.icons8.com/color/18/null/cancel--v1.png"/></span>
-        </div>
-    ) 
-}
+
  const editUser =(user)=>{
-    console.log(user); 
+   
     setIsEditing(true)
     setEditThisUser(user)
     // let updatedUsers = users.filter(user => user.id !== id)
@@ -73,6 +60,7 @@ export default function Home(){
                     //    <span onClick={()=> deleteUser(user.id)}><img src="https://img.icons8.com/color/18/null/cancel--v1.png"/></span> cancel
 
  const deleteUser =(id)=>{
+    console.log('render');
     let updatedUsers = users.filter(user => user.id !== id)
     setUsers(updatedUsers) 
  }
@@ -81,7 +69,7 @@ export default function Home(){
         return(
             
             (isEditing && user.id ===editThisUser.id) ?  
-          <ToEditUser /> : 
+          <EditUser user={user} handleForm={handleForm} editThisUser={editThisUser} handleSubmitEdit={handleSubmitEdit} setIsEditing={setIsEditing}/> : 
         
                 <tbody className="users-data" key={user.id}>
  
@@ -101,7 +89,7 @@ export default function Home(){
     })
     return(
         <div className="home">
-            <SearchBar/>
+            <SearchBar queue={query} setQuery={setQuery}/>
             <table className="users-table">
                 <thead>
                     <tr>
