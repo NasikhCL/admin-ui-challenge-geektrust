@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from "react";
 import './home.css'
+import Pagination from "./Pagination";
 
 
 
@@ -9,6 +10,9 @@ export default function Home(){
     const [editThisUser, setEditThisUser] = useState({})
     const [isEditing,setIsEditing] = useState(false)
     const [query , setQuery] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
+    const [usersPerPage, setUsersPerPage] = useState(40);
+    
     useEffect(()=>{
         fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json')
         .then(res=> res.json())
@@ -17,6 +21,11 @@ export default function Home(){
         
     },[]) 
 
+    const lastUserIndex = currentPage * usersPerPage;
+    const firstUserIndex = lastUserIndex - usersPerPage;
+
+    
+    const currentPageUsers = users.slice(firstUserIndex, lastUserIndex)
     const SearchBar = ()=>{
         
         return(
@@ -68,7 +77,7 @@ export default function Home(){
     setUsers(updatedUsers) 
  }
 
-    const allUsers = users.filter((item) => item.name.toLowerCase().includes(query) || item.role.toLowerCase().includes(query) || item.email.toLowerCase().includes(query)).map(user => {
+    const allUsers = currentPageUsers.filter((item) => item.name.toLowerCase().includes(query) || item.role.toLowerCase().includes(query) || item.email.toLowerCase().includes(query)).map(user => {
         return(
             
             (isEditing && user.id ===editThisUser.id) ?  
@@ -104,6 +113,8 @@ export default function Home(){
                 </thead>
                 { isLoading ? <h1>Loading ... </h1> : allUsers }
             </table>
+            <Pagination totalUsers={users.length} usersPerPage={usersPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
+          
         </div>
 
 
