@@ -11,7 +11,7 @@ export default function Home(){
     const [isEditing,setIsEditing] = useState(false)
     const [query , setQuery] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
-    const [usersPerPage, setUsersPerPage] = useState(40);
+    const [usersPerPage, setUsersPerPage] = useState(10);
     
     useEffect(()=>{
         fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json')
