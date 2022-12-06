@@ -1,12 +1,20 @@
 import React from 'react'
 import './pagination.css'
-const Pagination = ({totalUsers, usersPerPage,currentPage, setCurrentPage}) => {
-    let pages=[];
-    for(let i = 1; i<= Math.ceil(totalUsers/usersPerPage) ; i++){
-        pages.push(i)
-    }
+const Pagination = ({totalUsers, usersPerPage,currentPage, setCurrentPage, currentPageUsers}) => {
+  console.log('pagination ')
+  let pages=[];
+  for(let i = 1; i<= Math.ceil(totalUsers/usersPerPage) ; i++){
+      pages.push(i)
+      console.log(pages);
+  }
+
+console.log(pages);
+if(currentPageUsers === 0){
+  setCurrentPage(pages.length)
+}
   return (
     <div className='pagination'>
+      <button disabled={currentPage<=1} onClick={()=> setCurrentPage(1)}>First</button> 
         <button disabled={currentPage<=1} onClick={()=> setCurrentPage(current=> current-1)}>Prev</button> 
        
         {pages.map((page, index)=>{
@@ -18,6 +26,7 @@ const Pagination = ({totalUsers, usersPerPage,currentPage, setCurrentPage}) => {
             )
         })}
         <button disabled={currentPage > pages.length-1} onClick={()=> setCurrentPage(current=> current+1)}>Next</button> 
+        <button disabled={currentPage > pages.length-1} onClick={()=> setCurrentPage(pages.length)}>Last</button> 
         
     </div>
   )

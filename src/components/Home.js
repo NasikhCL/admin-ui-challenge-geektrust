@@ -12,7 +12,14 @@ export default function Home(){
     const [query , setQuery] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
     const [usersPerPage, setUsersPerPage] = useState(10);
+    const [isChecked, setIsChecked] = useState(false)
     console.log('render');
+    const handleSelectAll = ()=>{
+        setIsChecked(prev => !prev)
+
+        // setUsers(prev => prev.slice(firstUserIndex, lastUserIndex))
+
+    }
     
     useEffect(()=>{
         fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json')
@@ -62,6 +69,7 @@ export default function Home(){
  const deleteUser =(id)=>{
     console.log('render');
     let updatedUsers = users.filter(user => user.id !== id)
+   
     setUsers(updatedUsers) 
  }
 
@@ -71,9 +79,9 @@ export default function Home(){
             (isEditing && user.id ===editThisUser.id) ?  
           <EditUser user={user} handleForm={handleForm} editThisUser={editThisUser} handleSubmitEdit={handleSubmitEdit} setIsEditing={setIsEditing}/> : 
         
-                <tbody className="users-data" key={user.id}>
+                <tr className={isChecked ? 'highl-row users-data' : "users-data"} key={user.id}>
  
-
+                   <td><input id={`check-${user.id}`} type="checkbox" /></td>
                    <td>{user.name}</td>
                    <td>{user.email}</td>
                    <td>{user.role}</td>  
@@ -81,7 +89,7 @@ export default function Home(){
                        <span onClick={()=> editUser(user)}><img src="https://img.icons8.com/external-anggara-flat-anggara-putra/18/null/external-edit-user-interface-anggara-flat-anggara-putra-5.png"/></span> 
                        <span onClick={()=> deleteUser(user.id)}><img src="https://img.icons8.com/color/18/null/delete-forever.png"/></span>
                     </td>
-                </tbody>
+                </tr>
             
             
           
@@ -90,19 +98,26 @@ export default function Home(){
     return(
         <div className="home">
             <SearchBar queue={query} setQuery={setQuery}/>
-            <table className="users-table">
-                <thead>
-                    <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Action</th>
-                    </tr>
-                </thead>
-                { isLoading ? <h1>Loading ... </h1> : allUsers }
-            </table>
+            {allUsers.length === 0  && (users === 0) ? <h1>No Users Found</h1> :
+                <table className="users-table"> 
+                    <thead>
+                        <tr>
+                            <th>#<input type="checkbox" checked={isChecked} onChange={handleSelectAll}/></th>
+                            <th>Name</th> 
+                            <th>Email</th> 
+                            <th>Role</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { isLoading ? <tr><td>Loading...</td></tr> : allUsers }
+                        
+                    </tbody> 
+                </table> 
+        }
+            {/* <button onClick={handleDeleteAll}>Delete All</button> */}
           
-            <Pagination totalUsers={users.length} usersPerPage={usersPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
+            <Pagination totalUsers={users.length} usersPerPage={usersPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} currentPageUsers={currentPageUsers} />
         </div>
 
 
@@ -110,3 +125,4 @@ export default function Home(){
 }
 
 
+ 

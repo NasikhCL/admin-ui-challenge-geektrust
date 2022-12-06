@@ -1,5 +1,8 @@
 .pagination{
-    margin: auto;
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
     width: auto;
     color: #13253a;
 }
