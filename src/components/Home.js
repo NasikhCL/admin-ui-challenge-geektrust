@@ -28,12 +28,21 @@ export default function Home(){
         setIsLoading(false)
         
     },[]) 
+    useEffect(()=>{
+
+    },[])
 
     const lastUserIndex = currentPage * usersPerPage;
     const firstUserIndex = lastUserIndex - usersPerPage;
 
-    
     const currentPageUsers = users.slice(firstUserIndex, lastUserIndex)
+    useEffect(()=>{
+        console.log(currentPageUsers)
+        if(currentPageUsers.length === 0){
+            setCurrentPage(currentPage - 1)
+        }
+    },[currentPageUsers])
+   
 
     
     const handleForm = (e)=>{
@@ -102,7 +111,7 @@ export default function Home(){
                 <table className="users-table"> 
                     <thead>
                         <tr>
-                            <th>#<input type="checkbox" checked={isChecked} onChange={handleSelectAll}/></th>
+                            <th><input type="checkbox" checked={isChecked} onChange={handleSelectAll}/>#</th>
                             <th>Name</th> 
                             <th>Email</th> 
                             <th>Role</th>

@@ -3,14 +3,14 @@
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    width: auto;
+    width: 100%;
     color: #13253a;
 }
 
 .pagination button{
     border-color:#13253a;
     cursor: pointer;
-    margin: 10px;
+    margin: 5px;
     border-radius: 50%;
     background-color: transparent;
 }
