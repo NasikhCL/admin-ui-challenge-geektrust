@@ -43,7 +43,9 @@ export default function Home(){
         let newArray = users.filter((item) => item.name.toLowerCase().includes(query) || item.role.toLowerCase().includes(query) || item.email.toLowerCase().includes(query))
         setFilteredUsers(newArray)
         console.log('current page user :' + currentPageUsers.length)
-        
+        if(currentPageUsers.length === 1){
+            setCurrentPage(currentPage - 1)
+        }
         
     },[query, users])
     
@@ -81,7 +83,7 @@ export default function Home(){
     console.log('render');
     let updatedUsers = users.filter(user => user.id !== id)
     if(currentPageUsers.length === 1){
-        setCurrentPage(currentPage -1)
+        setCurrentPage(currentPage - 1)
     }
     setUsers(updatedUsers) 
  }
