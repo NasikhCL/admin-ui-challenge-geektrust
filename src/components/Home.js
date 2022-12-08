@@ -29,16 +29,25 @@ export default function Home(){
         setIsLoading(false)
         
     },[]) 
-    // useEffect(()=>{
-
-    // },[])
 
     const lastUserIndex = currentPage * usersPerPage;
     const firstUserIndex = lastUserIndex - usersPerPage;
 
     
-    const currentPageUsers = users.slice(firstUserIndex, lastUserIndex)
+    let currentPageUsers = filteredUser.slice(firstUserIndex, lastUserIndex);
 
+    // useEffect(()=>{
+    //     console.log(currentPageUsers)
+    // },) 
+    useEffect(()=>{
+        let newArray = users.filter((item) => item.name.toLowerCase().includes(query) || item.role.toLowerCase().includes(query) || item.email.toLowerCase().includes(query))
+        setFilteredUsers(newArray)
+        console.log('current page user :' + currentPageUsers.length)
+        if(currentPageUsers.length === 1){
+            setCurrentPage(currentPage - 1)
+        }
+        
+    },[query, users])
     
     const handleForm = (e)=>{
         // console.log('render');
@@ -116,23 +125,7 @@ export default function Home(){
             
           
         )
-    })
-    return(
-        <div className="home">
-            <SearchBar queue={query} setQuery={setQuery}/>
-            {allUsers.length === 0  && (users === 0) ? <h1>No Users Found</h1> :
-                <table className="users-table"> 
-                    <thead>
-                        <tr>
-                            <th>#<input type="checkbox" checked={isChecked} onChange={handleSelectAll}/></th>
-                            <th>Name</th> 
-                            <th>Email</th> 
-                            <th>Role</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { isLoading ? <tr><td>Loading...</td></tr> : allUsers }
+    }) }
                         
                     </tbody> 
                 </table> 
