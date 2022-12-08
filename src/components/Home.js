@@ -28,9 +28,9 @@ export default function Home(){
         setIsLoading(false)
         
     },[]) 
-    useEffect(()=>{
+    // useEffect(()=>{
 
-    },[])
+    // },[])
 
     const lastUserIndex = currentPage * usersPerPage;
     const firstUserIndex = lastUserIndex - usersPerPage;

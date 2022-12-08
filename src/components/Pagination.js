@@ -1,6 +1,6 @@
 import React from 'react'
 import './pagination.css'
-const Pagination = ({totalUsers, usersPerPage,currentPage, setCurrentPage, currentPageUsers}) => {
+const Pagination = ({totalUsers, usersPerPage,currentPage, setCurrentPage}) => {
   console.log('pagination ')
   let pages=[];
   for(let i = 1; i<= Math.ceil(totalUsers/usersPerPage) ; i++){
@@ -9,9 +9,7 @@ const Pagination = ({totalUsers, usersPerPage,currentPage, setCurrentPage, curre
   }
 
 console.log(pages);
-if(currentPageUsers === 0){
-  setCurrentPage(pages.length)
-}
+
   return (
     <div className='pagination'>
       <button disabled={currentPage<=1} onClick={()=> setCurrentPage(1)}>First</button> 
