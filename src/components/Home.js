@@ -13,6 +13,7 @@ export default function Home(){
     const [currentPage, setCurrentPage] = useState(1)
     const [usersPerPage, setUsersPerPage] = useState(10);
     const [isChecked, setIsChecked] = useState(false)
+    const [filteredUser, setFilteredUsers] = useState([])
     console.log('render');
     const handleSelectAll = ()=>{
         setIsChecked(prev => !prev)
@@ -35,14 +36,8 @@ export default function Home(){
     const lastUserIndex = currentPage * usersPerPage;
     const firstUserIndex = lastUserIndex - usersPerPage;
 
+    
     const currentPageUsers = users.slice(firstUserIndex, lastUserIndex)
-    useEffect(()=>{
-        console.log(currentPageUsers)
-        if(currentPageUsers.length === 0){
-            setCurrentPage(currentPage - 1)
-        }
-    },[currentPageUsers])
-   
 
     
     const handleForm = (e)=>{
@@ -78,13 +73,31 @@ export default function Home(){
  const deleteUser =(id)=>{
     console.log('render');
     let updatedUsers = users.filter(user => user.id !== id)
-   
+    if(currentPageUsers.length === 1){
+        setCurrentPage(currentPage - 1)
+    }
     setUsers(updatedUsers) 
  }
 
-    const allUsers = currentPageUsers.filter((item) => item.name.toLowerCase().includes(query) || item.role.toLowerCase().includes(query) || item.email.toLowerCase().includes(query)).map(user => {
+    // const allUsers = 
+    return(
+        <div className="home">
+            <SearchBar queue={query} setQuery={setQuery}/>
+            { (users.length === 0)  ? <h1>No Users Found</h1> :
+                <table className="users-table"> 
+                    <thead>
+                        <tr>
+                            <th>#<input type="checkbox" checked={isChecked} onChange={handleSelectAll}/></th>
+                            <th>Name</th> 
+                            <th>Email</th> 
+                            <th>Role</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { isLoading ? <tr><td>Loading...</td></tr> : currentPageUsers.map(user => {
         return(
-            
+             
             (isEditing && user.id ===editThisUser.id) ?  
           <EditUser user={user} handleForm={handleForm} editThisUser={editThisUser} handleSubmitEdit={handleSubmitEdit} setIsEditing={setIsEditing}/> : 
         
@@ -111,7 +124,7 @@ export default function Home(){
                 <table className="users-table"> 
                     <thead>
                         <tr>
-                            <th><input type="checkbox" checked={isChecked} onChange={handleSelectAll}/>#</th>
+                            <th>#<input type="checkbox" checked={isChecked} onChange={handleSelectAll}/></th>
                             <th>Name</th> 
                             <th>Email</th> 
                             <th>Role</th>
@@ -126,7 +139,7 @@ export default function Home(){
         }
             {/* <button onClick={handleDeleteAll}>Delete All</button> */}
           
-            <Pagination totalUsers={users.length} usersPerPage={usersPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} currentPageUsers={currentPageUsers} />
+            <Pagination totalUsers={filteredUser.length} usersPerPage={usersPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} currentPageUsers={currentPageUsers} />
         </div>
 
 
