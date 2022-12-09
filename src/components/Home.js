@@ -100,23 +100,18 @@ export default function Home(){
     console.log(currentPageUsers)
     // const newArr = filteredUser.map(user => user.id === currentPageUsers ({...user , isChecked: !user.isChecked }))
     const newArr = currentPageUsers.map(user => ({...user , isChecked: !user.isChecked}))
-    handleDeleteSelected(newArr)
-    // const filtArr = filteredUser.filter(user=> user.id !== currentPageUsers.id )
-    // const fullArr 
-    // setUsers(newArr)
+    // const filtArr = filteredUser.filter(user=> currentPageUsers.id )
+    // const fullArr
+  
+    // currentPageUsers(newArr)
     console.log(newArr)
     // setFilteredUsers( filtArr.concat(newArr) )
    
  }
- const handleDeleteSelected =(arr)=>{
-    if(arr){
-        const newArr = arr.filter(user => !user.isChecked)
-        setUsers(newArr)
+ const handleDeleteSelected =()=>{
 
-    }else{
-        const newArr = filteredUser.filter(user => !user.isChecked)
-        setUsers(newArr)
-    }
+    const newArr = filteredUser.filter(user => !user.isChecked)
+    setUsers(newArr)
      // const allUsers =  
     }
 
@@ -129,7 +124,7 @@ export default function Home(){
                 <table className="users-table"> 
                     <thead>
                         <tr>
-                            <th>#<input type="checkbox" checked={false} onChange={handleCheckedAll} /></th>
+                            <th>#<input type="checkbox"  onChange={handleCheckedAll} /></th>
                             <th>Name</th> 
                             <th>Email</th> 
                             <th>Role</th>
@@ -138,26 +133,26 @@ export default function Home(){
                     </thead>
                     <tbody>
                         { isLoading ? <tr><td>Loading...</td></tr> : currentPageUsers.map(user => {
-        return(
-             
-            (isEditing && user.id ===editThisUser.id) ?  
-          <EditUser user={user} handleForm={handleForm} editThisUser={editThisUser} handleSubmitEdit={handleSubmitEdit} setIsEditing={setIsEditing}/> : 
-         
-                <tr key={user.id}>
- 
-                   <td><input checked={user.isChecked} onChange={()=> handleCheckChange(user)} type="checkbox" /></td>
-                   <td>{user.name}</td>
-                   <td>{user.email}</td>
-                   <td>{user.role}</td>  
-                   <td>
-                       <span onClick={()=> editUser(user)}><img src="https://img.icons8.com/external-anggara-flat-anggara-putra/18/null/external-edit-user-interface-anggara-flat-anggara-putra-5.png"/></span> 
-                       <span onClick={()=> deleteUser(user.id)}><img src="https://img.icons8.com/color/18/null/delete-forever.png"/></span>
-                    </td>
-                </tr>
-            
-            
-          
-        )
+                                            return(
+                                                
+                                                (isEditing && user.id ===editThisUser.id) ?  
+                                            <EditUser user={user} handleForm={handleForm} editThisUser={editThisUser} handleSubmitEdit={handleSubmitEdit} setIsEditing={setIsEditing}/> : 
+                                            
+                                                    <tr key={user.id}>
+                                    
+                                                    <td><input checked={user.isChecked} onChange={()=>handleCheckChange(user) } type="checkbox" /></td>
+                                                    <td>{user.name}</td>
+                                                    <td>{user.email}</td>
+                                                    <td>{user.role}</td>  
+                                                    <td>
+                                                        <span onClick={()=> editUser(user)}><img src="https://img.icons8.com/external-anggara-flat-anggara-putra/18/null/external-edit-user-interface-anggara-flat-anggara-putra-5.png"/></span> 
+                                                        <span onClick={()=> deleteUser(user.id)}><img src="https://img.icons8.com/color/18/null/delete-forever.png"/></span>
+                                                        </td>
+                                                    </tr>
+                                                
+                                                
+                                            
+                                            )
     }) }
                         
                     </tbody> 
