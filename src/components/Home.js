@@ -46,10 +46,13 @@ export default function Home(){
         console.log(filteredUser);
         console.log('current page user :' + currentPageUsers.length)
         // if(currentPageUsers.length === 1){
+            // }
+            
+        },[query, users])
+
+    useEffect(()=>{       
             setCurrentPage(1)
-        // }
-        
-    },[query, users])
+         },[query])
     
     const handleForm = (e)=>{
         // console.log('render');
@@ -99,12 +102,13 @@ export default function Home(){
  const handleCheckedAll = ()=>{
     console.log(currentPageUsers)
     // const newArr = filteredUser.map(user => user.id === currentPageUsers ({...user , isChecked: !user.isChecked }))
-    const newArr = currentPageUsers.map(user => ({...user , isChecked: !user.isChecked}))
-    // const filtArr = filteredUser.filter(user=> currentPageUsers.id )
+    currentPageUsers = currentPageUsers.map(user => ({...user , isChecked: !user.isChecked}))
+
+    // const filtArr = filteredUser.map(user=> (currentPageUsers.filter(cUser => cUser.id !== user.id )) )
     // const fullArr
-  
+    // setFilteredUsers([...newArr, ...filteredUser])
     // currentPageUsers(newArr)
-    console.log(newArr)
+    console.log(currentPageUsers)
     // setFilteredUsers( filtArr.concat(newArr) )
    
  }
@@ -120,7 +124,7 @@ export default function Home(){
     return(
         <div className="home">
             <SearchBar queue={query} setQuery={setQuery}/>
-            { (users.length === 0)  ? <h1>No Users Found</h1> :
+            { users.length === 0  ? <h1>No Users Found</h1> :
                 <table className="users-table"> 
                     <thead>
                         <tr>
