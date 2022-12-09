@@ -5,10 +5,10 @@ const Pagination = ({totalUsers, usersPerPage,currentPage, setCurrentPage}) => {
   let pages=[];
   for(let i = 1; i<= Math.ceil(totalUsers/usersPerPage) ; i++){
       pages.push(i)
-      console.log(pages);
+      // console.log(pages);
   }
 
-console.log(pages);
+// console.log('pages is equak to: '+pages);
 
   return (
     <div className='pagination'>

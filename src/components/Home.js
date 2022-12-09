@@ -12,12 +12,13 @@ export default function Home(){
     const [query , setQuery] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
     const [usersPerPage, setUsersPerPage] = useState(10);
-    const [isChecked, setIsChecked] = useState(false)
+    // const [isChecked, setIsChecked] = useState(false)
     const [filteredUser, setFilteredUsers] = useState([])
+    const [selectAll, setSelectAll]= useState({1: false, 2: false, 3: false, 4: false, 5:false})
     console.log('render');
     const handleSelectAll = ()=>{
-        setIsChecked(prev => !prev)
-
+        // setIsChecked(prev => !prev)
+    // console.log(user)
         // setUsers(prev => prev.slice(firstUserIndex, lastUserIndex))
 
     }
@@ -25,7 +26,7 @@ export default function Home(){
     useEffect(()=>{
         fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json')
         .then(res=> res.json())
-        .then(data=> setUsers(data)) 
+        .then(data=> setUsers(data))
         setIsLoading(false)
         
     },[]) 
@@ -40,12 +41,13 @@ export default function Home(){
     //     console.log(currentPageUsers)
     // },) 
     useEffect(()=>{
-        let newArray = users.filter((item) => item.name.toLowerCase().includes(query) || item.role.toLowerCase().includes(query) || item.email.toLowerCase().includes(query))
+        let newArray = users.filter((item) => item.name.toLowerCase().includes(query) || item.role.toLowerCase().includes(query) || item.email.toLowerCase().includes(query)).map(user => ({...user, isChecked: false}))
         setFilteredUsers(newArray)
+        console.log(filteredUser);
         console.log('current page user :' + currentPageUsers.length)
-        if(currentPageUsers.length === 1){
-            setCurrentPage(currentPage - 1)
-        }
+        // if(currentPageUsers.length === 1){
+            setCurrentPage(1)
+        // }
         
     },[query, users])
     
@@ -88,7 +90,38 @@ export default function Home(){
     setUsers(updatedUsers) 
  }
 
-    // const allUsers = 
+ const handleCheckChange= (userC)=>{
+    // console.log(check);
+    // const checkedUser = {...user, isChecked: !user.isChecked}
+    const newArr = filteredUser.map(user => (user.id === userC.id ?{...user, isChecked: !user.isChecked} : user ))
+    setFilteredUsers(newArr)
+ }
+ const handleCheckedAll = ()=>{
+    console.log(currentPageUsers)
+    // const newArr = filteredUser.map(user => user.id === currentPageUsers ({...user , isChecked: !user.isChecked }))
+    const newArr = currentPageUsers.map(user => ({...user , isChecked: !user.isChecked}))
+    handleDeleteSelected(newArr)
+    // const filtArr = filteredUser.filter(user=> user.id !== currentPageUsers.id )
+    // const fullArr 
+    // setUsers(newArr)
+    console.log(newArr)
+    // setFilteredUsers( filtArr.concat(newArr) )
+   
+ }
+ const handleDeleteSelected =(arr)=>{
+    if(arr){
+        const newArr = arr.filter(user => !user.isChecked)
+        setUsers(newArr)
+
+    }else{
+        const newArr = filteredUser.filter(user => !user.isChecked)
+        setUsers(newArr)
+    }
+     // const allUsers =  
+    }
+
+
+
     return(
         <div className="home">
             <SearchBar queue={query} setQuery={setQuery}/>
@@ -96,7 +129,7 @@ export default function Home(){
                 <table className="users-table"> 
                     <thead>
                         <tr>
-                            <th>#<input type="checkbox" checked={isChecked} onChange={handleSelectAll}/></th>
+                            <th>#<input type="checkbox" checked={false} onChange={handleCheckedAll} /></th>
                             <th>Name</th> 
                             <th>Email</th> 
                             <th>Role</th>
@@ -109,10 +142,10 @@ export default function Home(){
              
             (isEditing && user.id ===editThisUser.id) ?  
           <EditUser user={user} handleForm={handleForm} editThisUser={editThisUser} handleSubmitEdit={handleSubmitEdit} setIsEditing={setIsEditing}/> : 
-        
-                <tr className={isChecked ? 'highl-row users-data' : "users-data"} key={user.id}>
+         
+                <tr key={user.id}>
  
-                   <td><input id={`check-${user.id}`} type="checkbox" /></td>
+                   <td><input checked={user.isChecked} onChange={()=> handleCheckChange(user)} type="checkbox" /></td>
                    <td>{user.name}</td>
                    <td>{user.email}</td>
                    <td>{user.role}</td>  
@@ -130,7 +163,7 @@ export default function Home(){
                     </tbody> 
                 </table> 
         }
-            {/* <button onClick={handleDeleteAll}>Delete All</button> */}
+            <button className="delete-button" onClick={handleDeleteSelected}>Delete All</button>
           
             <Pagination totalUsers={filteredUser.length} usersPerPage={usersPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} currentPageUsers={currentPageUsers} />
         </div>
