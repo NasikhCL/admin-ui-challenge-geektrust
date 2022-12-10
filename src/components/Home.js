@@ -93,7 +93,7 @@ export default function Home(){
     setUsers(updatedUsers) 
  }
 
- const handleCheckChange= (userC)=>{
+ const handleCheckChange = (userC) =>{
     // console.log(check);
     // const checkedUser = {...user, isChecked: !user.isChecked}
     const newArr = filteredUser.map(user => (user.id === userC.id ?{...user, isChecked: !user.isChecked} : user ))
@@ -101,9 +101,25 @@ export default function Home(){
  }
  const handleCheckedAll = ()=>{
     console.log(currentPageUsers)
+    // onst lastUserIndex = currentPage * usersPerPage;
+    // const firstUserIndex = lastUserIndex - usersPerPage;
     // const newArr = filteredUser.map(user => user.id === currentPageUsers ({...user , isChecked: !user.isChecked }))
     currentPageUsers = currentPageUsers.map(user => ({...user , isChecked: !user.isChecked}))
+    setFilteredUsers(prevData => {
+        let count = 0;
+        let newData =[];
+        for (let i =0; i< prevData.length; i++){
 
+            if(count<lastUserIndex && count >= firstUserIndex){
+                newData.push({...prevData[i],isChecked: !prevData[0].isChecked})
+                count++;
+            }else{
+                newData.push(prevData[i])
+                count++;
+            }
+        }
+        return newData;
+    });
     // const filtArr = filteredUser.map(user=> (currentPageUsers.filter(cUser => cUser.id !== user.id )) )
     // const fullArr
     // setFilteredUsers([...newArr, ...filteredUser])
