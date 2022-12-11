@@ -33,7 +33,7 @@ export default function Home(){
 
     const lastUserIndex = currentPage * usersPerPage;
     const firstUserIndex = lastUserIndex - usersPerPage;
-
+ 
     
     let currentPageUsers = filteredUser.slice(firstUserIndex, lastUserIndex);
 
@@ -104,14 +104,15 @@ export default function Home(){
     // onst lastUserIndex = currentPage * usersPerPage;
     // const firstUserIndex = lastUserIndex - usersPerPage;
     // const newArr = filteredUser.map(user => user.id === currentPageUsers ({...user , isChecked: !user.isChecked }))
-    currentPageUsers = currentPageUsers.map(user => ({...user , isChecked: !user.isChecked}))
+    // currentPageUsers = currentPageUsers.map(user => ({...user , isChecked: !user.isChecked}))
+
     setFilteredUsers(prevData => {
         let count = 0;
         let newData =[];
         for (let i =0; i< prevData.length; i++){
 
             if(count<lastUserIndex && count >= firstUserIndex){
-                newData.push({...prevData[i],isChecked: !prevData[0].isChecked})
+                newData.push({...prevData[i], isChecked: !prevData[i].isChecked})
                 count++;
             }else{
                 newData.push(prevData[i])
@@ -129,7 +130,7 @@ export default function Home(){
    
  }
  const handleDeleteSelected =()=>{
-
+    alert('Checked Contacts Will be deleted');
     const newArr = filteredUser.filter(user => !user.isChecked)
     setUsers(newArr)
      // const allUsers =  
@@ -144,7 +145,7 @@ export default function Home(){
                 <table className="users-table"> 
                     <thead>
                         <tr>
-                            <th>#<input type="checkbox"  onChange={handleCheckedAll} /></th>
+                            <th><input type="checkbox"  onChange={handleCheckedAll} />#</th>
                             <th>Name</th> 
                             <th>Email</th> 
                             <th>Role</th>

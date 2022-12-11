@@ -1,6 +1,8 @@
 .search-bar{
+
     height:30px;
     width:80%;
     background-color: transparent;
-    margin-bottom: 20px;
+    margin: 20px auto;
+    /* margin-bottom: 20px; */
 }

@@ -1,9 +1,10 @@
 .pagination{
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
+    /* position: absolute; */
+    /* bottom: 40px; */
+    /* left: 50%; */
+    margin: auto;
+    /* transform: translateX(-50%); */
+    width: fit-content;
     color: #13253a;
 }
 
