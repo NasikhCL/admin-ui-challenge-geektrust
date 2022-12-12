@@ -181,6 +181,7 @@ export default function Home() {
               <th>Action</th>
             </tr>
           </thead>
+       
           <tbody>
             {isLoading ? (
               <tr>
@@ -197,7 +198,8 @@ export default function Home() {
                     setIsEditing={setIsEditing}
                   />
                 ) : (
-                  <tr key={user.id}>
+                   
+                  <tr className="table-row" key={user.id}>
                     <td>
                       <input
                         checked={user.isChecked}
@@ -208,7 +210,7 @@ export default function Home() {
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.role}</td>
-                    <td className="f-jcsa w-20">
+                    <td className="flex-jcsa">
                       <span onClick={() => editUser(user)}>
                         <img src="https://img.icons8.com/external-anggara-flat-anggara-putra/18/null/external-edit-user-interface-anggara-flat-anggara-putra-5.png" />
                       </span>
@@ -217,14 +219,16 @@ export default function Home() {
                       </span>
                     </td>
                   </tr>
+            
+                
                 );
               })
             )}
           </tbody>
         </table>
       )}
-      <button className="delete-button" onClick={handleDeleteSelected}>
-        Delete All
+      <button className="delete-selected-btn" onClick={handleDeleteSelected}>
+        Delete selected
       </button>
 
       <Pagination
