@@ -12,8 +12,8 @@ const Pagination = ({totalUsers, usersPerPage,currentPage, setCurrentPage}) => {
 
   return (
     <div className='pagination'>
-      <button disabled={currentPage<=1} onClick={()=> setCurrentPage(1)}><i class="fa-solid fa-angle-left"></i></button> 
-        <button disabled={currentPage<=1} onClick={()=> setCurrentPage(current=> current-1)}><i class="fa-solid fa-angles-left"></i></button> 
+      <button disabled={currentPage<=1} onClick={()=> setCurrentPage(1)}><i class="fa-solid fa-angles-left"></i></button> 
+        <button disabled={currentPage<=1} onClick={()=> setCurrentPage(current=> current-1)}><i class="fa-solid fa-angle-left"></i></button> 
        
         {pages.map((page, index)=>{
             return(
