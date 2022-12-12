@@ -32,10 +32,16 @@
 
 td{
     border: 1px solid orange;
+    height: 35px;
 }
 
 
 .highl-row{
     background-color: grey;
 }
-
+.f-jcsa{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 60px;
+}
