@@ -9,13 +9,14 @@
 }
 
 .pagination button{
-    border-color:#13253a;
     cursor: pointer;
     margin: 5px;
     border-radius: 50%;
     background-color: transparent;
+    border: none;
 }
 .pagination button:hover{
+    border-color:#13253a;
     background-color: #13253a;
     color: #e5ecf9;
 }

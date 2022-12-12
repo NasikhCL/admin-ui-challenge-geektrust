@@ -18,7 +18,8 @@ const EditUser = ({user, handleForm,handleSubmitEdit ,editThisUser, setIsEditing
           </td>
           <td className='flex-jcsa'>
             <span onClick={handleSubmitEdit}><i class="apply-edit fa-solid fa-check"></i></span>
-            <span onClick={()=> setIsEditing(false)}><i class="cancel-edit fa-solid fa-xmark"></i></span>
+            <span onClick={()=> setIsEditing(false)}><i class="cancel-edit 
+            ]fa-solid fa-xmark"></i></span>
           </td>
         </tr>
     ) 
