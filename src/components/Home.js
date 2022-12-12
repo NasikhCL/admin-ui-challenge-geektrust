@@ -108,7 +108,7 @@ export default function Home() {
     // const newArr = filteredUser.map(user => user.id === currentPageUsers ({...user , isChecked: !user.isChecked }))
     // currentPageUsers = currentPageUsers.map(user => ({...user , isChecked: !user.isChecked}))
     if(isCheckedAll){
-       
+        
         setFilteredUsers((prevData) => {
           let count = 0;
           let newData = [];
@@ -152,7 +152,7 @@ export default function Home() {
     // setFilteredUsers( filtArr.concat(newArr) )
   };
   const handleDeleteSelected = () => {
-    alert("Checked Contacts Will be deleted");
+    alert("Selected Users Will be deleted");
     const newArr = filteredUser.filter((user) => !user.isChecked);
     setUsers(newArr);
     // const allUsers =
@@ -161,9 +161,8 @@ export default function Home() {
   return (
     <div className="home">
       <SearchBar queue={query} setQuery={setQuery} />
-      {users.length === 0 ? (
-        <h1>No Users Found</h1>
-      ) : (
+      {(users.length === 0) ? <h1 className="m-auto">No Users Found</h1>
+       : (
         <table className="users-table">
           <thead>
             <tr>
@@ -198,8 +197,7 @@ export default function Home() {
                     setIsEditing={setIsEditing}
                   />
                 ) : (
-                   
-                  <tr className="table-row" key={user.id}>
+                  <tr className={user.isChecked ? 'selected' : ''} key={user.id}>
                     <td>
                       <input
                         checked={user.isChecked}
@@ -212,10 +210,10 @@ export default function Home() {
                     <td>{user.role}</td>
                     <td className="flex-jcsa">
                       <span onClick={() => editUser(user)}>
-                        <img src="https://img.icons8.com/external-anggara-flat-anggara-putra/18/null/external-edit-user-interface-anggara-flat-anggara-putra-5.png" />
+                      <i className="edit-user fa-regular fa-pen-to-square"></i>
                       </span>
                       <span onClick={() => deleteUser(user.id)}>
-                        <img src="https://img.icons8.com/color/18/null/delete-forever.png" />
+                      <i className="delete-user fa-solid fa-trash-can"></i>
                       </span>
                     </td>
                   </tr>
@@ -228,7 +226,7 @@ export default function Home() {
         </table>
       )}
       <button className="delete-selected-btn" onClick={handleDeleteSelected}>
-        Delete selected
+        Delete Selected
       </button>
 
       <Pagination

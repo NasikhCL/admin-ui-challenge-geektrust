@@ -1,6 +1,16 @@
-/* .flex-jcsa{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    width: 60px;
-} */
+.apply-edit{
+    color: #04ad04;
+    font-weight: 900;
+}
+.apply-edit:hover{
+    transform: scale(1.2);
+    color: #009100;
+}
+
+.cancel-edit{
+    color:#d33a3a
+}
+.cancel-edit:hover{
+    color: #ff0000;
+    transform: scale(1.2);
+}

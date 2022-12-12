@@ -40,12 +40,13 @@
 }
 .users-table td{
     height: 40px;
-    padding: 2px 0 4px 0;
+    padding: 2px 5px 4px 0;
+
 }
 
 
-.highl-row{
-    background-color: grey;
+.selected{
+    background-color: rgba(100,100,100,.15);
 }
 .flex-jcsa{
     
@@ -54,12 +55,27 @@
     justify-content: space-around;
     width: 60px;
 
-    border: 2px solid red;
 }
 .flex-jcsa span{
     cursor: pointer;
     margin-top: 10px;
 }
+.edit-user{
+    color: #6666b8;
+}
+.edit-user:hover{
+    color: #0000ff;
+    transform: scale(1.2);
+}
+.delete-user{
+    color:#d33a3a
+}
+.delete-user:hover{
+    color: #ff0000;
+    transform: scale(1.2);
+}
+   
+
 .delete-selected-btn{
     margin-left: 10px;
     background-color: transparent;
@@ -67,9 +83,16 @@
     font-weight: bold;
     border: 2px solid #13253a;
     padding: 7px 5px;
+    transition: all .4s ease-in-out;
 }
 .delete-selected-btn:hover{
     color: white;
     background-color: #13253a;
     cursor: pointer;
+    
+}
+
+.m-auto{
+    margin: auto;
+    width: fit-content;
 }

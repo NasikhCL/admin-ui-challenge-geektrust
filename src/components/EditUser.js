@@ -17,8 +17,8 @@ const EditUser = ({user, handleForm,handleSubmitEdit ,editThisUser, setIsEditing
             <input name="role" type="text" onChange={handleForm} value={editThisUser.role} />
           </td>
           <td className='flex-jcsa'>
-            <span onClick={handleSubmitEdit}><img src="https://img.icons8.com/fluency/18/null/checkmark.png"/></span>
-            <span onClick={()=> setIsEditing(false)}><img src="https://img.icons8.com/color/18/null/cancel--v1.png"/></span>
+            <span onClick={handleSubmitEdit}><i class="apply-edit fa-solid fa-check"></i></span>
+            <span onClick={()=> setIsEditing(false)}><i class="cancel-edit fa-solid fa-xmark"></i></span>
           </td>
         </tr>
     ) 
