@@ -195,7 +195,7 @@ export default function Home() {
       )}
 
       <button
-        disabled={isLoading}
+        disabled={filteredUser.length === 0}
         className="delete-selected-btn"
         onClick={handleDeleteSelected}
       >

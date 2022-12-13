@@ -74,6 +74,9 @@
     cursor: pointer;
     
 }
+.delete-selected-btn:disabled{
+    cursor: not-allowed;
+}
 
 .m-auto{
     margin: auto;
