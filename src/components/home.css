@@ -1,40 +1,22 @@
 .home{
-    /* height: 80vh; */
     width: 100%;
-    /* display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center; */
     margin: auto;
     margin-top: 30px;
-    /* border: 2px solid green; */
+
 
  
 }
 .users-table{
     margin:10px auto;
-    /* padding: auto; */
     width:100%;
-    /* height: 70vh; */
-    /* height: 70vh; */
     width: 80%;
     text-align: left;
     border-collapse:collapse;
- 
-    /* table-layout:fixed */
 }
 
 
-
-/* .user-details{ */
-    /* border: 1px solid orange; */
-    /* width: 200px; */
-    /* text-align: left; */
-/* } */
-
 .users-table tr{
     height: 10%;
-    /* background-color: #13253a; */
     border-bottom: 1px solid #13253a ;
 
 }

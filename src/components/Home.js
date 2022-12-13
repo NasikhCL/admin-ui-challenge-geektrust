@@ -11,12 +11,15 @@ export default function Home() {
   const [isEditing, setIsEditing] = useState(false);
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-//   const [usersPerPage, setUsersPerPage] = useState(10);
-  // const [isChecked, setIsChecked] = useState(false)
   const [filteredUser, setFilteredUsers] = useState([]);
   const [isCheckedAll, setIsCheckedAll] = useState(false);
   const usersPerPage = 10;
   console.log("render");
+
+  const lastUserIndex = currentPage * usersPerPage;
+  const firstUserIndex = lastUserIndex - usersPerPage;
+
+  let currentPageUsers = filteredUser.slice(firstUserIndex, lastUserIndex);
 
   useEffect(() => {
     fetch(
@@ -24,17 +27,8 @@ export default function Home() {
     )
       .then((res) => res.json())
       .then((data) => setUsers(data));
-    setIsLoading(false);
   }, []);
 
-  const lastUserIndex = currentPage * usersPerPage;
-  const firstUserIndex = lastUserIndex - usersPerPage;
-
-  let currentPageUsers = filteredUser.slice(firstUserIndex, lastUserIndex);
-
-  // useEffect(()=>{
-  //     console.log(currentPageUsers)
-  // },)
   useEffect(() => {
     let newArray = users
       .filter(
@@ -45,18 +39,15 @@ export default function Home() {
       )
       .map((user) => ({ ...user, isChecked: false }));
     setFilteredUsers(newArray);
-    // console.log(filteredUser);
-    // console.log("current page user :" + currentPageUsers.length);
-    // if(currentPageUsers.length === 1){
-    // }
+
+    setIsLoading(false);
   }, [query, users]);
 
   useEffect(() => {
     setCurrentPage(1);
   }, [query]);
-  
-  const handleForm = (e) => {
-    // console.log('render');
+
+  const handleInput = (e) => {
     setEditThisUser((prevData) => {
       return {
         ...prevData,
@@ -77,11 +68,8 @@ export default function Home() {
   const editUser = (user) => {
     setIsEditing(true);
     setEditThisUser(user);
-    // let updatedUsers = users.filter(user => user.id !== id)
-    // setUsers(updatedUsers)
   };
 
- 
   const deleteUser = (id) => {
     console.log("render");
     let updatedUsers = users.filter((user) => user.id !== id);
@@ -92,9 +80,6 @@ export default function Home() {
   };
 
   const handleCheckChange = (userC) => {
-    // console.log(check);
-    // const checkedUser = {...user, isChecked: !user.isChecked}
-    
     const newArr = filteredUser.map((user) =>
       user.id === userC.id ? { ...user, isChecked: !user.isChecked } : user
     );
@@ -102,70 +87,57 @@ export default function Home() {
   };
   const handleCheckedAll = () => {
     console.log(currentPageUsers);
-    setIsCheckedAll(!isCheckedAll)
-    // onst lastUserIndex = currentPage * usersPerPage;
-    // const firstUserIndex = lastUserIndex - usersPerPage;
-    // const newArr = filteredUser.map(user => user.id === currentPageUsers ({...user , isChecked: !user.isChecked }))
-    // currentPageUsers = currentPageUsers.map(user => ({...user , isChecked: !user.isChecked}))
-    if(isCheckedAll){
-        
-        setFilteredUsers((prevData) => {
-          let count = 0;
-          let newData = [];
-          for (let i = 0; i < prevData.length; i++) {
-            if (count < lastUserIndex && count >= firstUserIndex) {
-              newData.push({ ...prevData[i], isChecked: false });
-              count++;
-            } else {
-              newData.push(prevData[i]);
-              count++;
-            }
-          }
-          return newData;
-        });
-       
-    }else{
-       
-        setFilteredUsers((prevData) => {
-          let count = 0;
-          let newData = [];
-          for (let i = 0; i < prevData.length; i++) {
-            if (count < lastUserIndex && count >= firstUserIndex) {
-              newData.push({ ...prevData[i], isChecked: true });
-              count++;
-            } else {
-              newData.push(prevData[i]);
-              count++;
-            }
-          }
-          return newData;
-        });
-       
-    }
+    setIsCheckedAll(!isCheckedAll);
 
-    
-    // const filtArr = filteredUser.map(user=> (currentPageUsers.filter(cUser => cUser.id !== user.id )) )
-    // const fullArr
-    // setFilteredUsers([...newArr, ...filteredUser])
-    // currentPageUsers(newArr)
-    console.log(currentPageUsers);
-    // setFilteredUsers( filtArr.concat(newArr) )
+    if (isCheckedAll) {
+      setFilteredUsers((prevData) => {
+        let count = 0;
+        let newData = [];
+        for (let i = 0; i < prevData.length; i++) {
+          if (count < lastUserIndex && count >= firstUserIndex) {
+            newData.push({ ...prevData[i], isChecked: false });
+            count++;
+          } else {
+            newData.push(prevData[i]);
+            count++;
+          }
+        }
+        return newData;
+      });
+    } else {
+      setFilteredUsers((prevData) => {
+        let count = 0;
+        let newData = [];
+        for (let i = 0; i < prevData.length; i++) {
+          if (count < lastUserIndex && count >= firstUserIndex) {
+            newData.push({ ...prevData[i], isChecked: true });
+            count++;
+          } else {
+            newData.push(prevData[i]);
+            count++;
+          }
+        }
+        return newData;
+      });
+    }
   };
   const handleDeleteSelected = () => {
     alert("Selected Users Will be deleted");
     const newArr = filteredUser.filter((user) => !user.isChecked);
-    if(isCheckedAll){   
-      setIsCheckedAll(false)
+    if (isCheckedAll) {
+      setIsCheckedAll(false);
     }
     setUsers(newArr);
-    // const allUsers =
   };
 
   return (
     <div className="home">
       <SearchBar queue={query} setQuery={setQuery} />
-      {(users.length === 0) ? <h1 className="m-auto">No Users Found</h1>
-       : (
+      {isLoading ? (
+        <h1 className="m-auto">Loading...</h1>
+      ) : filteredUser.length === 0 ? (
+        <h1 className="m-auto">No Users Found</h1>
+      ) : (
         <table className="users-table">
           <thead>
             <tr>
@@ -183,52 +155,50 @@ export default function Home() {
               <th>Action</th>
             </tr>
           </thead>
-       
+
           <tbody>
-            {isLoading ? (
-              <tr>
-                <td>Loading...</td>
-              </tr>
-            ) : (
-              currentPageUsers.map((user) => {
-                return isEditing && user.id === editThisUser.id ? (
-                  <EditUser
-                    user={user}
-                    handleForm={handleForm}
-                    editThisUser={editThisUser}
-                    handleSubmitEdit={handleSubmitEdit}
-                    setIsEditing={setIsEditing}
-                  />
-                ) : (
-                  <tr className={user.isChecked ? 'selected' : ''} key={user.id}>
-                    <td>
-                      <input
-                        checked={user.isChecked}
-                        onChange={() => handleCheckChange(user)}
-                        type="checkbox"
-                      />
-                    </td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.role}</td>
-                    <td className="flex-jcsa">
-                      <span onClick={() => editUser(user)}>
+            {currentPageUsers.map((user) => {
+              return isEditing && user.id === editThisUser.id ? (
+                <EditUser
+                  user={user}
+                  handleInput={handleInput}
+                  editThisUser={editThisUser}
+                  handleSubmitEdit={handleSubmitEdit}
+                  setIsEditing={setIsEditing}
+                  handleCheckChange={handleCheckChange}
+                />
+              ) : (
+                <tr className={user.isChecked ? "selected" : ""} key={user.id}>
+                  <td>
+                    <input
+                      checked={user.isChecked}
+                      onChange={() => handleCheckChange(user)}
+                      type="checkbox"
+                    />
+                  </td>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.role}</td>
+                  <td className="flex-jcsa">
+                    <span onClick={() => editUser(user)}>
                       <i className="edit-user fa-regular fa-pen-to-square"></i>
-                      </span>
-                      <span onClick={() => deleteUser(user.id)}>
+                    </span>
+                    <span onClick={() => deleteUser(user.id)}>
                       <i className="delete-user fa-solid fa-trash-can"></i>
-                      </span>
-                    </td>
-                  </tr>
-            
-                
-                );
-              })
-            )}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       )}
-      <button className="delete-selected-btn" onClick={handleDeleteSelected}>
+
+      <button
+        disabled={isLoading}
+        className="delete-selected-btn"
+        onClick={handleDeleteSelected}
+      >
         Delete Selected
       </button>
 
