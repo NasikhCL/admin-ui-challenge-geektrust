@@ -82,7 +82,8 @@
     color:#13253a;
     font-weight: bold;
     border: 2px solid #13253a;
-    padding: 7px 5px;
+    padding: 10px 5px;
+    border-radius: 20px;
     transition: all .4s ease-in-out;
 }
 .delete-selected-btn:hover{
