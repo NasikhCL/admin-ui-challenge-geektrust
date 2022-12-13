@@ -154,6 +154,9 @@ export default function Home() {
   const handleDeleteSelected = () => {
     alert("Selected Users Will be deleted");
     const newArr = filteredUser.filter((user) => !user.isChecked);
+    if(isCheckedAll){
+      setIsCheckedAll(false)
+    }
     setUsers(newArr);
     // const allUsers =
   };
